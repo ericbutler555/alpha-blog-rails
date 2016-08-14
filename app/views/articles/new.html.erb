@@ -1,21 +1,5 @@
-<h1>Create an article</h1>
+<h1 class="form-header">Create an article</h1>
 
-<% if @article.errors.any? %>
-  <ul>
-  <% @article.errors.full_messages.each do |msg| %>
-    <li><%= msg %></li>
-  <% end %>
-  </ul>
-<% end %>
+<%= render 'form' %>
 
-<%= form_for @article do |f| %>
-
-  <%= f.label :title %>
-  <%= f.text_field :title %>
-
-  <%= f.label :body %>
-  <%= f.text_area :body %>
-
-  <%= f.submit "Create" %>
-
-<% end %>
+<%= link_to "Cancel", articles_path %>
