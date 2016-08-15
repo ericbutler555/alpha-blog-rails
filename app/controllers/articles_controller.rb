@@ -3,14 +3,17 @@ class ArticlesController < ApplicationController
   # execute the get_article method before these 4 actions (allows the app to know which article/id to act on):
   before_action :get_article, only: [:show, :edit, :update, :destroy]
 
+  # GET /articles and /articles.json:
   def index
     @articles = Article.all
   end
 
+  # GET /articles/new:
   def new
     @article = Article.new
   end
 
+  # POST /articles and /articles.json:
   def create
     @article = Article.create(article_params)
     if @article.save
@@ -22,12 +25,15 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # GET /articles/1 and /articles/1.json:
   def show
   end
 
+  # GET /articles/1/edit:
   def edit
   end
 
+  # PATCH/PUT /articles/1 and /articles/1.json:
   def update
     if @article.update(article_params)
       flash[:notice] = "Article was successfully updated!"
@@ -37,6 +43,7 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # DELETE /articles/1 and /articles/1.json:
   def destroy
     @article.destroy
     flash[:notice] = "Article was successfully deleted!"
@@ -48,6 +55,7 @@ class ArticlesController < ApplicationController
       # could also just add this line to each of the show, edit, update, and destroy methods, but this is more D.R.Y.
       @article = Article.find(params[:id])
     end
+    # whitelist which parameters are allowed through form:
     def article_params
       params.require(:article).permit(:title, :body)
     end

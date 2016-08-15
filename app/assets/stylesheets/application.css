@@ -12,7 +12,4 @@
  *
  *= require_tree .
  *= require_self
- *= require globals.scss
- *= require forms.scss
- *= require articles.scss
  */
