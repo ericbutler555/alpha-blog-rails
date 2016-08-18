@@ -9,4 +9,7 @@ Rails.application.routes.draw do
   # make all crud routes for articles:
   resources :articles
 
+  get 'signup', to: 'users#new'
+  resources :users, except: [:new]
+
 end
