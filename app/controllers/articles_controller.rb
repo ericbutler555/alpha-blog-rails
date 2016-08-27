@@ -2,6 +2,8 @@ class ArticlesController < ApplicationController
 
   # execute the get_article method before these 4 actions (allows the app to know which article/id to act on):
   before_action :get_article, only: [:show, :edit, :update, :destroy]
+  before_action :require_user, except: [:index, :show]
+  before_action :require_same_user, only: [:edit, :update, :destroy]
 
   # GET /articles and /articles.json:
   def index
@@ -16,7 +18,7 @@ class ArticlesController < ApplicationController
   # POST /articles and /articles.json:
   def create
     @article = Article.create(article_params)
-    @article.user = User.first
+    @article.user = current_user
     if @article.save
       flash[:success] = "Article was successfully created!"
       redirect_to article_path(@article)
@@ -52,13 +54,22 @@ class ArticlesController < ApplicationController
   end
 
   private
+
     def get_article
       # could also just add this line to each of the show, edit, update, and destroy methods, but this is more D.R.Y.
       @article = Article.find(params[:id])
     end
+
     # whitelist which parameters are allowed through form:
     def article_params
       params.require(:article).permit(:title, :body)
+    end
+
+    def require_same_user
+      if current_user != @article.user
+        flash[:danger] = "You can only edit or delete your own articles"
+        redirect_to root_path
+      end
     end
 
 end
