@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  has_many :articles
+  has_many :articles, dependent: :destroy
 
   validates :username, 
     presence: true, 
