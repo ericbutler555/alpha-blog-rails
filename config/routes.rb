@@ -16,4 +16,7 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
 
+  # make all crud routes for categories, but don't allow destroy:
+  resources :categories, except: [:destroy]
+
 end
